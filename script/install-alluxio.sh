@@ -41,3 +41,5 @@ source ~/.bashrc
 echo "Configuring Alluxio..."
 cp config/alluxio-site.properties "${INSTALL_DIR}/conf"
 cp config/alluxio-env.sh "${INSTALL_DIR}/conf"
+cp config/masters "${INSTALL_DIR}/conf"
+cp config/workers "${INSTALL_DIR}/conf"
