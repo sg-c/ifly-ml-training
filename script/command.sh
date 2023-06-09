@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./install-alluxio.sh
+./script/install-alluxio.sh
