@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# Determine the parent directory of the script's location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PARENT_DIR="$(dirname "$SCRIPT_DIR")"
+
 # Specify the paths of the existing and new hosts files
 EXISTING_HOSTS_FILE="/etc/hosts"
-NEW_HOSTS_FILE="config/hosts"
+NEW_HOSTS_FILE="$PARENT_DIR/config/hosts"
 
 # Backup the existing hosts file
 cp "$EXISTING_HOSTS_FILE" "/tmp/hosts.backup"
