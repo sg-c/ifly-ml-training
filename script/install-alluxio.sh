@@ -39,6 +39,13 @@ if ! grep -q "ALLUXIO_HOME" ~/.bashrc; then
     source ~/.bashrc
 fi
 
+# Add $ALLUXIO_HOME/bin to the PATH if not already set in .bashrc
+if ! grep -q "export PATH=.*\$ALLUXIO_HOME/bin.*" ~/.bashrc; then
+    echo "Adding $ALLUXIO_HOME/bin to the PATH..."
+    echo 'export PATH="$ALLUXIO_HOME/bin:$PATH"' >>~/.bashrc
+    source ~/.bashrc
+fi
+
 # Set the JAVA_HOME environment variable if not already set in .bashrc
 if ! grep -q "JAVA_HOME" ~/.bashrc; then
     echo "Setting JAVA_HOME environment variable..."
