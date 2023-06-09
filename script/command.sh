@@ -1,3 +1,4 @@
 #!/bin/bash
 
-./script/install-alluxio.sh
+# ./script/install-alluxio.sh
+./script/update-hosts.sh
