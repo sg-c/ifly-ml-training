@@ -59,3 +59,10 @@ cp config/alluxio-site.properties "${INSTALL_DIR}/conf"
 cp config/alluxio-env.sh "${INSTALL_DIR}/conf"
 cp config/masters "${INSTALL_DIR}/conf"
 cp config/workers "${INSTALL_DIR}/conf"
+
+# Get the hostname of the current node based on the IP-to-Hostname mapping in /etc/hosts
+CURRENT_HOSTNAME=$(grep "$(hostname -I | awk '{print $1}')" /etc/hosts | awk '{print $2}')
+
+# Update alluxio-site.properties with the current hostname
+echo "Updating alluxio.master.hostname configuration..."
+sed -i "s|^alluxio.master.hostname=.*$|alluxio.master.hostname=${CURRENT_HOSTNAME}|" "${INSTALL_DIR}/conf/alluxio-site.properties"
