@@ -12,7 +12,7 @@ NEW_HOSTS_FILE="$PARENT_DIR/config/hosts"
 cp "$EXISTING_HOSTS_FILE" "/tmp/hosts.backup"
 
 # Merge the new hosts file with the existing one, replacing existing host maps if they exist
-awk 'NR==FNR{a[$1]=$2; next} $1 in a {$2=a[$1]} 1' "$NEW_HOSTS_FILE" "$EXISTING_HOSTS_FILE" > "/tmp/hosts.tmp"
+awk 'NR==FNR{a[$1]=$2; next} $1 in a {$2=a[$1]} 1' "$EXISTING_HOSTS_FILE" "$NEW_HOSTS_FILE" > "/tmp/hosts.tmp"
 sudo mv "/tmp/hosts.tmp" "$EXISTING_HOSTS_FILE"
 
 echo "Merged the new hosts file with the existing one."
