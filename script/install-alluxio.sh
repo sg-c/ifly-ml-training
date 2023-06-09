@@ -32,10 +32,19 @@ else
     echo "Alluxio is already installed in ${INSTALL_DIR}. Skipping extraction."
 fi
 
-# Set the ALLUXIO_HOME environment variable
-echo "Setting ALLUXIO_HOME environment variable..."
-echo "export ALLUXIO_HOME=${INSTALL_DIR}" >>~/.bashrc
-source ~/.bashrc
+# Set the ALLUXIO_HOME environment variable if not already set in .bashrc
+if ! grep -q "ALLUXIO_HOME" ~/.bashrc; then
+    echo "Setting ALLUXIO_HOME environment variable..."
+    echo "export ALLUXIO_HOME=${INSTALL_DIR}" >>~/.bashrc
+    source ~/.bashrc
+fi
+
+# Set the JAVA_HOME environment variable if not already set in .bashrc
+if ! grep -q "JAVA_HOME" ~/.bashrc; then
+    echo "Setting JAVA_HOME environment variable..."
+    echo "export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64" >>~/.bashrc
+    source ~/.bashrc
+fi
 
 # Configure Alluxio
 echo "Configuring Alluxio..."
