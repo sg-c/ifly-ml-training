@@ -15,6 +15,8 @@ if [[ ! -f "${flag_file}" ]]; then
     sudo mkdir /mnt/data
     # mount the disk
     sudo mount /dev/sdb /mnt/data
+    # update permission
+    sudo chmod 777 /mnt/data
 
     # Create the flag file
     touch "${flag_file}"
