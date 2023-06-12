@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+# Determine the parent directory of the script's location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PARENT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# update repo
+cd $PARENT_DIR; git pull; cd -
+
+source $PARENT_DIR/script/prepare.sh
+source $PARENT_DIR/script/update-hosts.sh
+source $PARENT_DIR/script/install-alluxio.sh
