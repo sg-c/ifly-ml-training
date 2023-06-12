@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f ./command.sh ]; then
+if [ ! -f ./tool/command.sh ]; then
     echo "create the command.sh in ./tool/ for commands to run"
     exit 1
 fi
