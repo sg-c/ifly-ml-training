@@ -6,7 +6,7 @@ flag_file="/tmp/prepared"
 if [[ ! -f "${flag_file}" ]]; then
 
     # install java11 and other softwares
-    sudo yum install -y java-11-amazon-corretto tmux
+    sudo yum install -y java-11-amazon-corretto-devel tmux
 
     # mount ebs for data
     # format the disk
