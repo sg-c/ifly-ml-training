@@ -53,12 +53,17 @@ if ! grep -q "JAVA_HOME" ~/.bashrc; then
     source ~/.bashrc
 fi
 
+
+# Determine the parent directory of the script's location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PARENT_DIR="$(dirname "$SCRIPT_DIR")"
+
 # Configure Alluxio
 echo "Configuring Alluxio..."
-cp config/alluxio-site.properties "${INSTALL_DIR}/conf"
-cp config/alluxio-env.sh "${INSTALL_DIR}/conf"
-cp config/masters "${INSTALL_DIR}/conf"
-cp config/workers "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/alluxio-site.properties "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/alluxio-env.sh "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/masters "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/workers "${INSTALL_DIR}/conf"
 
 # Get the hostname of the current node based on the IP-to-Hostname mapping in /etc/hosts
 CURRENT_HOSTNAME=$(grep "$(hostname -I | awk '{print $1}')" /etc/hosts | awk '{print $2}')
