@@ -54,4 +54,42 @@ else
     echo "Alluxio is already installed in ${INSTALL_DIR}. Skipping extraction."
 fi
 
-# Rest of the script...
+# Set the ALLUXIO_HOME environment variable if not already set in .bashrc
+if ! grep -q "ALLUXIO_HOME" ~/.bashrc; then
+    echo "Setting ALLUXIO_HOME environment variable..."
+    echo "export ALLUXIO_HOME=${INSTALL_DIR}" >>~/.bashrc
+    source ~/.bashrc
+fi
+
+# Add $ALLUXIO_HOME/bin to the PATH if not already set in .bashrc
+if ! grep -q "export PATH=.*\$ALLUXIO_HOME/bin.*" ~/.bashrc; then
+    echo "Adding $ALLUXIO_HOME/bin to the PATH..."
+    echo 'export PATH="$ALLUXIO_HOME/bin:$PATH"' >>~/.bashrc
+    source ~/.bashrc
+fi
+
+# Set the JAVA_HOME environment variable if not already set in .bashrc
+if ! grep -q "JAVA_HOME" ~/.bashrc; then
+    echo "Setting JAVA_HOME environment variable..."
+    echo "export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64" >>~/.bashrc
+    source ~/.bashrc
+fi
+
+
+# Determine the parent directory of the script's location
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PARENT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Configure Alluxio
+echo "Configuring Alluxio..."
+cp $PARENT_DIR/config/alluxio-site.properties "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/alluxio-env.sh "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/masters "${INSTALL_DIR}/conf"
+cp $PARENT_DIR/config/workers "${INSTALL_DIR}/conf"
+
+# Get the hostname of the current node based on the IP-to-Hostname mapping in /etc/hosts
+CURRENT_HOSTNAME=$(grep "$(hostname -I | awk '{print $1}')" /etc/hosts | awk '{print $2}')
+
+# Update alluxio-site.properties with the current hostname
+echo "Updating alluxio.master.hostname configuration..."
+sed -i "s|^alluxio.master.hostname=.*$|alluxio.master.hostname=${CURRENT_HOSTNAME}|" "${INSTALL_DIR}/conf/alluxio-site.properties"
