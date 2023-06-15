@@ -1,20 +1,23 @@
 #!/bin/bash
 set -e
 
-# Set the edition
-EDITION="open-source"
-ALLUXIO_VERSION="2.9.0"
+# Get the edition and Alluxio version from command line arguments
+EDITION="$1"
+ALLUXIO_VERSION="$2"
 
 # Define the version and S3 bucket details
 S3_BUCKET="alluxio-binaries"
 
 # Determine the file name and directory name based on the edition
-if [[ "${EDITION}" == "enterprise" ]]; then
+if [[ "${EDITION}" == "ee" ]]; then
     FILE_NAME="alluxio-enterprise-${ALLUXIO_VERSION}-bin.tar.gz"
     DIR_NAME="alluxio-enterprise-${ALLUXIO_VERSION}"
-else
+elif [[ "${EDITION}" == "os" ]]; then
     FILE_NAME="alluxio-${ALLUXIO_VERSION}-bin.tar.gz"
     DIR_NAME="alluxio-${ALLUXIO_VERSION}"
+else
+    echo "Invalid edition specified. Please provide 'ee' for enterprise or 'os' for open source."
+    exit 1
 fi
 
 # Set the installation directory
@@ -25,7 +28,7 @@ if [[ ! -d "${INSTALL_DIR}" ]]; then
     # Check if the file already exists
     if [[ ! -e "${FILE_NAME}" ]]; then
         # Determine the S3 path based on the edition
-        if [[ "${EDITION}" == "enterprise" ]]; then
+        if [[ "${EDITION}" == "ee" ]]; then
             S3_PATH="ee_byol/${ALLUXIO_VERSION}-1.0/${FILE_NAME}"
         else
             S3_PATH="os/${ALLUXIO_VERSION}/${FILE_NAME}"
