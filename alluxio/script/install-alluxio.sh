@@ -2,9 +2,13 @@
 set -e
 
 # Define the version and S3 bucket details
-ALLUXIO_VERSION="2.9.0"
 S3_BUCKET="alluxio-binaries"
+# OS version
+ALLUXIO_VERSION="2.9.0"
 S3_PATH="os/${ALLUXIO_VERSION}/alluxio-${ALLUXIO_VERSION}-bin.tar.gz"
+# EE version
+#ALLUXIO_VERSION="2.9.0-1.0"
+#S3_PATH="ee_byol/${ALLUXIO_VERSION}/alluxio-enterprise-${ALLUXIO_VERSION}-bin.tar.gz"
 
 # Set the installation directory
 INSTALL_DIR="/opt/alluxio"
